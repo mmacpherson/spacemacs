@@ -12,6 +12,9 @@
 (setq python-packages
   '(
     anaconda-mode
+    (blacken (recipe
+              :fetcher github
+              :repo "https://github.com/proofit404/blacken"))
     company
     (company-anaconda :toggle (configuration-layer/package-usedp 'company))
     cython-mode
@@ -448,3 +451,12 @@ fix this issue."
         "=" 'yapfify-buffer)
       (when python-enable-yapf-format-on-save
         (add-hook 'python-mode-hook 'yapf-mode)))))
+
+(defun python/init-blacken ()
+  (use-package blacken
+    :defer t
+    :init
+    (progn
+      (spacemacs/set-leader-keys-for-major-mode 'python-mode
+        "b" 'blacken-buffer)
+      )))
